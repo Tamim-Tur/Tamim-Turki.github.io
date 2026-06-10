@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamim Turki — Futur Ingénieur Réseaux & Sécurité</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050c10;
+            --bg2: #091318;
+            --bg3: #0d1f26;
+            --card: rgba(0, 255, 200, 0.03);
+            --card-h: rgba(0, 255, 200, 0.07);
+            --border: rgba(0, 255, 200, 0.09);
+            --border-h: rgba(0, 255, 200, 0.35);
+            --text: #d4eae8;
+            --muted: #5a7a76;
+            --cyan: #00ffe0;
+            --cyan2: #00c4ad;
+            --orange: #ff6b2b;
+            --orange2: #ff9a4f;
+            --gold: #ffd166;
+            --green: #39ff8c;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        /* ─── SCANLINES ambiance ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 200, 0.012) 2px,
+                    rgba(0, 255, 200, 0.012) 4px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 10% 50%, rgba(0, 255, 200, 0.10) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 50% at 90% 40%, rgba(255, 107, 43, 0.08) 0%, transparent 55%),
+                radial-gradient(ellipse 30% 30% at 50% 90%, rgba(0, 196, 173, 0.05) 0%, transparent 50%);
+        }
+
+        /* Hexagonal grid */
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 200, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 200, 0.04) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 80% at center, black 40%, transparent 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 3.5rem;
+            max-width: 950px;
+            width: 100%;
+        }
+
+        .hero-img-wrap {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .hex-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: conic-gradient(var(--cyan), var(--orange), var(--cyan));
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hex-ring2 {
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 200, 0.15);
+            animation: spin 10s linear infinite reverse;
+        }
+
+        .hero-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            border: 3px solid var(--bg);
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            z-index: 2;
+            width: 16px;
+            height: 16px;
+            background: var(--green);
+            border-radius: 50%;
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 10px var(--green);
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .6;
+                transform: scale(1.2)
+            }
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--cyan);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: var(--cyan);
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 .first {
+            color: #fff;
+        }
+
+        .hero h1 .last {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--cyan);
+        }
+
+        .hero-sub {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .hero-alt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--orange2);
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.6rem 1.3rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: var(--card);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-link:hover {
+            border-color: var(--cyan);
+            background: rgba(0, 255, 200, 0.08);
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .hero-link.primary {
+            background: var(--cyan);
+            color: var(--bg);
+            border-color: transparent;
+            font-weight: 700;
+        }
+
+        .hero-link.primary:hover {
+            background: var(--cyan2);
+            box-shadow: 0 0 24px rgba(0, 255, 200, 0.4);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--muted);
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.1em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: bob 2s ease infinite;
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-7px);
+            }
+        }
+
+        /* ─── NAV ─── */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 12, 16, 0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+            gap: 0;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .nav a {
+            display: block;
+            color: var(--muted);
+            text-decoration: none;
+            padding: 0.85rem 1rem;
+            font-weight: 500;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav a:hover {
+            color: var(--cyan);
+            border-bottom-color: var(--cyan);
+        }
+
+        /* ─── LAYOUT ─── */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem;
+        }
+
+        .section {
+            margin-bottom: 5.5rem;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            color: #fff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--cyan);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .section-title .accent {
+            color: var(--cyan);
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 255, 200, 0.3), transparent);
+        }
+
+        /* ─── ABOUT ─── */
+        .about-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.25rem;
+            transition: border-color 0.3s;
+        }
+
+        .about-card:hover {
+            border-color: var(--border-h);
+        }
+
+        .about-card p {
+            color: var(--muted);
+            line-height: 1.85;
+            font-size: 0.92rem;
+        }
+
+        .about-card p+p {
+            margin-top: 1rem;
+        }
+
+        .hl {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .hl-o {
+            color: var(--orange2);
+            font-weight: 600;
+        }
+
+        /* ─── SKILLS ─── */
+        .skills-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .skill-cat {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        .skill-cat:hover {
+            border-color: var(--border-h);
+        }
+
+        .skill-cat-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .tag {
+            background: rgba(0, 255, 200, 0.05);
+            border: 1px solid rgba(0, 255, 200, 0.12);
+            color: var(--text);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .tag:hover {
+            background: rgba(0, 255, 200, 0.12);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .tag.o {
+            background: rgba(255, 107, 43, 0.06);
+            border-color: rgba(255, 107, 43, 0.15);
+            color: var(--orange2);
+        }
+
+        .tag.o:hover {
+            background: rgba(255, 107, 43, 0.14);
+            border-color: var(--orange);
+        }
+
+        /* ─── PROJECTS ─── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .project-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-h);
+            background: var(--card-h);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0, 255, 200, 0.1);
+        }
+
+        /* ─── VIDEO / IMAGE BACKGROUND ─── */
+        .project-media {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .project-media video,
+        .project-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(5, 12, 16, 0.55) 0%,
+                    rgba(5, 12, 16, 0.80) 60%,
+                    rgba(5, 12, 16, 0.96) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-card:hover .project-media video,
+        .project-card:hover .project-media img {
+            opacity: 1;
+        }
+
+        .project-card:hover .project-media::after {
+            opacity: 1;
+        }
+
+        .project-card .project-top,
+        .project-card .project-body {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Badge "DÉMO" discret */
+        .demo-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            background: rgba(0, 255, 200, 0.1);
+            border: 1px solid rgba(0, 255, 200, 0.25);
+            border-radius: 4px;
+            padding: 0.18rem 0.5rem;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .demo-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-top {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.08), rgba(255, 107, 43, 0.06));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-body {
+            padding: 1.4rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            color: var(--muted);
+            font-size: 0.78rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .ptags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .ptag {
+            background: rgba(0, 255, 200, 0.06);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+            color: var(--cyan);
+            font-size: 0.66rem;
+            font-weight: 600;
+            padding: 0.22rem 0.6rem;
+            border-radius: 3px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ptag.o {
+            background: rgba(255, 107, 43, 0.06);
+            border-color: rgba(255, 107, 43, 0.12);
+            color: var(--orange2);
+        }
+
+        /* ─── EXPERIENCE ─── */
+        .timeline {
+            position: relative;
+            padding-left: 2.25rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(180deg, var(--cyan), var(--orange), transparent);
+        }
+
+        .exp-item {
+            position: relative;
+            margin-bottom: 1.75rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.75rem;
+            transition: all 0.3s;
+        }
+
+        .exp-item:hover {
+            border-color: var(--border-h);
+            background: var(--card-h);
+            transform: translateX(5px);
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -2.7rem;
+            top: 1.75rem;
+            width: 12px;
+            height: 12px;
+            background: var(--cyan);
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+            box-shadow: 0 0 12px var(--cyan);
+        }
+
+        .exp-date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan);
+            font-size: 0.72rem;
+            margin-bottom: 0.45rem;
+            letter-spacing: 0.05em;
+        }
+
+        .exp-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+
+        .exp-company {
+            color: var(--orange2);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .exp-desc {
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.75;
+        }
+
+        .exp-desc li {
+            margin-bottom: 0.35rem;
+            padding-left: 1rem;
+            position: relative;
+            list-style: none;
+        }
+
+        .exp-desc li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+        }
+
+        /* ─── EDUCATION ─── */
+        .edu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .edu-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.85rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            transition: border-color 0.3s;
+        }
+
+        .edu-card:hover {
+            border-color: var(--border-h);
+        }
+
+        .edu-year-badge {
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: var(--cyan);
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            background: rgba(0, 255, 200, 0.04);
+            white-space: nowrap;
+            margin-top: 0.2rem;
+        }
+
+        .edu-degree {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .edu-school {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .edu-note {
+            font-size: 0.72rem;
+            background: rgba(255, 209, 102, 0.08);
+            border: 1px solid rgba(255, 209, 102, 0.2);
+            color: var(--gold);
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+        }
+
+        .btn-diploma {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 8px 14px;
+            background: rgba(0, 255, 224, 0.06);
+            border: 1px solid rgba(0, 255, 224, 0.2);
+            color: var(--cyan);
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .btn-diploma:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 255, 224, 0.12);
+            border-color: var(--cyan);
+            box-shadow: 0 8px 22px rgba(0, 255, 224, 0.15);
+            color: var(--cyan);
+        }
+
+        .btn-diploma.orange {
+            border-color: rgba(255, 107, 43, 0.25);
+            color: var(--orange2);
+            background: rgba(255, 107, 43, 0.06);
+        }
+
+        .btn-diploma.orange:hover {
+            border-color: var(--orange);
+            background: rgba(255, 107, 43, 0.12);
+            box-shadow: 0 8px 22px rgba(255, 107, 43, 0.15);
+            color: var(--orange2);
+        }
+
+        /* ─── LANGUAGES ─── */
+        .langs-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .lang-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .lang-card:hover {
+            border-color: var(--border-h);
+            transform: translateY(-2px);
+        }
+
+        .lang-flag {
+            font-size: 1.5rem;
+        }
+
+        .lang-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: #fff;
+        }
+
+        .lang-level {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--muted);
+        }
+
+        /* ─── CONTACT ─── */
+        .contact-box {
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.07), rgba(255, 107, 43, 0.05));
+            border: 1px solid rgba(0, 255, 200, 0.18);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .contact-box h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 0.6rem;
+        }
+
+        .contact-box p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.4rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.25s;
+        }
+
+        .contact-link:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: rgba(0, 255, 200, 0.06);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 255, 200, 0.15);
+        }
+
+        .contact-link.orange:hover {
+            border-color: var(--orange);
+            color: var(--orange2);
+            background: rgba(255, 107, 43, 0.06);
+            box-shadow: 0 8px 24px rgba(255, 107, 43, 0.15);
+        }
+
+        /* ─── BTT ─── */
+        .btt {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: var(--cyan);
+            border: none;
+            border-radius: 6px;
+            color: var(--bg);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 255, 200, 0.35);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .btt.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .btt:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 255, 200, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 680px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-links {
+                justify-content: center;
+            }
+
+            .hero-eyebrow {
+                justify-content: center;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .edu-card {
+                flex-direction: column;
+            }
+        }
+
+        .proj-panel {
+            display: none;
+        }
+
+        .proj-panel.active {
+            display: block;
+        }
+
+        .proj-tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .proj-tab {
+            padding: 10px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: #eaeaea;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hover */
+        .proj-tab:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 255, 224, 0.06);
+            border-color: rgba(0, 255, 224, 0.35);
+            color: var(--cyan);
+        }
+
+        /* Active tab */
+        .proj-tab.active {
+            background: rgba(0, 255, 224, 0.12);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            box-shadow: 0 0 18px rgba(0, 255, 224, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Focus accessibilité */
+        .proj-tab:focus {
+            outline: none;
+            ring: 2px solid #2575fc;
+        }
+
+        /* ─── LIGHTBOX ─── */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.96);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(6px);
+        }
+
+        .lightbox-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .lightbox-inner {
+            position: relative;
+            max-width: 92vw;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            transform: scale(0.94);
+            transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .lightbox-overlay.open .lightbox-inner {
+            transform: scale(1);
+        }
+
+        .lightbox-inner video,
+        .lightbox-inner img {
+            max-width: 92vw;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 60px rgba(0, 255, 200, 0.15), 0 30px 80px rgba(0, 0, 0, 0.7);
+            object-fit: contain;
+            display: block;
+        }
+
+        .lightbox-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--cyan);
+            letter-spacing: 0.08em;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            background: rgba(0, 255, 200, 0.08);
+            border: 1px solid rgba(0, 255, 200, 0.25);
+            color: var(--cyan);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(0, 255, 200, 0.18);
+            border-color: var(--cyan);
+            box-shadow: 0 0 14px rgba(0, 255, 200, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Curseur pointer sur les cartes avec média */
+        .project-card.has-media {
+            cursor: pointer;
+        }
+
+        /* Hint visuel au survol */
+        .project-card.has-media:hover .demo-badge {
+            background: rgba(0, 255, 200, 0.2);
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-img-wrap">
+                <div class="hex-ring"></div>
+                <div class="hex-ring2"></div>
+                <img src="Picture.jpg" alt="Tamim Turki" class="hero-img">
+                <div class="status-dot" title="Disponible dès septembre 2026"></div>
+            </div>
+            <div class="hero-text">
+                <p class="hero-eyebrow">Futur ingénieur</p>
+                <h1>
+                    <span class="first">Tamim</span>
+                    <span class="last">Turki</span>
+                </h1>
+                <p class="hero-sub">Réseaux &amp; Sécurité · Full-Stack · Systèmes Embarqués</p>
+                <p class="hero-alt">// Recherche alternance · Cycle Ingénieur · Dès sept. 2026 · 2–3 ans</p>
+                <div class="hero-links">
+                    <a href="mailto:tamimturki624@gmail.com" class="hero-link">📧 Email</a>
+                    <a href="tel:+33621674871" class="hero-link">📞 +33 6 21 67 48 71</a>
+                    <a href="https://linkedin.com/in/Mohamed-Tamim-Turki" class="hero-link" target="_blank">💼
+                        LinkedIn</a>
+                    <a href="cv.pdf" download class="hero-link primary">⬇ Télécharger le CV</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span>SCROLL</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </header>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <ul>
+            <li><a href="#profil">Profil</a></li>
+            <li><a href="#competences">Compétences</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#experience">Expérience</a></li>
+            <li><a href="#formation">Formation</a></li>
+            <li><a href="#langues">Langues</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- PROFIL -->
+        <section id="profil" class="section">
+            <h2 class="section-title"><span class="num">01</span> À propos <span class="accent">de moi</span></h2>
+            <div class="about-card">
+                <p>Étudiant en <span class="hl">Bachelor (B3) Développement Web &amp; IA à l'EFREI Paris</span>, je
+                    combine la rigueur industrielle d'un <span class="hl">DUT GEII</span> avec une expertise en
+                    développement logiciel, systèmes embarqués et sécurité applicative — acquise notamment en alternance
+                    chez <span class="hl-o">LEA Networks</span> sur des équipements réseaux réels.</p>
+                <p>Je recherche une alternance dans le cadre du <span class="hl">Cycle Ingénieur Réseaux &amp;
+                        Sécurité</span> (rentrée septembre 2026, durée 2 à 3 ans) pour contribuer à la conception
+                    d'infrastructures réseaux robustes et à la mise en œuvre de solutions de sécurité avancées.</p>
+                <p>Passionné de violon pour la discipline et de photographie pour la créativité — des qualités que
+                    j'applique aussi dans mon travail technique : rigueur, précision et sens du détail.</p>
+            </div>
+        </section>
+
+        <!-- COMPÉTENCES -->
+        <section id="competences" class="section">
+            <h2 class="section-title"><span class="num">02</span> Compétences <span class="accent">techniques</span>
+            </h2>
+            <div class="skills-grid">
+
+                <div class="skill-cat">
+                    <div class="skill-cat-title">// Réseaux &amp; Infrastructure</div>
+                    <div class="tags">
+                        <span class="tag">TCP/IP</span>
+                        <span class="tag">IPv4 / IPv6</span>
+                        <span class="tag">VLAN</span>
+                        <span class="tag">NAT</span>
+                        <span class="tag">DHCP</span>
+                        <span class="tag">DNS</span>
+                        <span class="tag">Wireshark</span>
+                        <span class="tag">tcpdump</span>
+                        <span class="tag">OpenVPN</span>
+                        <span class="tag">WireGuard</span>
+                        <span class="tag">pfSense</span>
+                    </div>
+                </div>
+
+                <div class="skill-cat">
+                    <div class="skill-cat-title">// Cybersécurité</div>
+                    <div class="tags">
+                        <span class="tag">JWT</span>
+                        <span class="tag">Authentification 2FA</span>
+                        <span class="tag">Protection XSS / CSRF</span>
+                        <span class="tag">VPN</span>
+                        <span class="tag">Sécurité applicative</span>
+                        <span class="tag">pfSense</span>
+                    </div>
+                </div>
+
+                <div class="skill-cat">
+                    <div class="skill-cat-title">// Web Full-Stack</div>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Express</span>
+                        <span class="tag">REST API</span>
+                        <span class="tag">Three.js</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="skill-cat">
+                    <div class="skill-cat-title">// DevOps &amp; Cloud</div>
+                    <div class="tags">
+                        <span class="tag o">Docker</span>
+                        <span class="tag o">Kubernetes</span>
+                        <span class="tag o">Terraform</span>
+                        <span class="tag o">CI/CD</span>
+                        <span class="tag o">Git</span>
+                        <span class="tag o">AWS</span>
+                        <span class="tag o">Azure</span>
+                        <span class="tag o">Grafana</span>
+                        <span class="tag o">Linux (Debian, Ubuntu)</span>
+                        <span class="tag o">VMware / VirtualBox</span>
+                    </div>
+                </div>
+
+                <div class="skill-cat">
+                    <div class="skill-cat-title">// Data &amp; IA</div>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">NumPy</span>
+                        <span class="tag">Scikit-learn</span>
+                        <span class="tag">Détection d'anomalies</span>
+                        <span class="tag">Fusion de capteurs</span>
+                    </div>
+                </div>
+
+                <div class="skill-cat">
+                    <div class="skill-cat-title">// Embarqué &amp; Hardware</div>
+                    <div class="tags">
+                        <span class="tag o">C / C++</span>
+                        <span class="tag o">ARM Keil</span>
+                        <span class="tag o">KiCad</span>
+                        <span class="tag o">PCB Design</span>
+                        <span class="tag o">Soudure de précision</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PROJETS -->
+        <section id="projets" class="section">
+            <h2 class="section-title"><span class="num">03</span> Projets <span class="accent">techniques</span></h2>
+
+            <!-- TABS -->
+            <div class="proj-tabs">
+                <button class="proj-tab active" data-tab="dut">⚙️ DUT GEII</button>
+                <button class="proj-tab" data-tab="web">💻 Dev Web &amp; App</button>
+                <button class="proj-tab" data-tab="mixte">🔗 Projets croisés</button>
+            </div>
+
+            <!-- DUT GEII -->
+            <div class="proj-panel active" id="tab-dut">
+                <p class="tab-desc">Projets réalisés en <span class="hl">IUT GEII</span> — axés hardware, embarqué et
+                    électronique.</p>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <div class="project-top">🤖</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Robotique Suiveur de Ligne</h3>
+                            <p class="project-desc">Conception complète d'un robot autonome : PCB sous KiCad,
+                                algorithmes PID et détection infrarouge — du schéma électronique au prototype
+                                fonctionnel opérationnel.</p>
+                            <div class="ptags">
+                                <span class="ptag">KiCad</span>
+                                <span class="ptag">C/C++</span>
+                                <span class="ptag">PID</span>
+                                <span class="ptag o">PCB Design</span>
+                                <span class="ptag o">Electronique</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-top">⚡</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Fusion Capteurs Embarqués</h3>
+                            <p class="project-desc">Intégration multi-capteurs (accéléromètre + gyromètre) sur
+                                inclinomètre ARM Keil. Optimisation des algorithmes de fusion pour la précision de
+                                positionnement.</p>
+                            <div class="ptags">
+                                <span class="ptag">ARM Keil</span>
+                                <span class="ptag">C</span>
+                                <span class="ptag o">Embarqué</span>
+                                <span class="ptag o">Hardware</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-top">🔧</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Banc de Test POE (Power over Ethernet) — stage "LEA Networks"</h3>
+                            <p class="project-desc">Conception et mise en œuvre d'une solution de validation
+                                fonctionnelle pour équipements réseaux (émetteurs TX / récepteurs RX). Soudures de
+                                précision et câblage structuré.</p>
+                            <div class="ptags">
+                                <span class="ptag">Python</span>
+                                <span class="ptag o">Electronique</span>
+                                <span class="ptag o">Soudure</span>
+                                <span class="ptag o">Stage</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-top">📡</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Télémètre Ultrasonique — PSoC Creator</h3>
+                            <p class="project-desc">Conception d'un télémètre ultrasonique sur PSoC Creator :
+                                configuration des signaux ultrasoniques et implémentation d'algorithmes de traitement du
+                                signal. Renforcement des compétences en intégration hardware/software et en
+                                documentation technique détaillée.</p>
+                            <div class="ptags">
+                                <span class="ptag">PSoC Creator</span>
+                                <span class="ptag">C</span>
+                                <span class="ptag o">Embarqué</span>
+                                <span class="ptag o">Traitement signal</span>
+                                <span class="ptag o">Hardware</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-top">🎮</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Simulation Physique — Qt</h3>
+                            <p class="project-desc">Développement d'un projet logiciel sous Qt : modélisation orientée
+                                objet, gestion des collisions et des rebonds en temps réel. Recherche et implémentation
+                                de fonctionnalités spécifiques, avec un accent sur la résolution de problèmes et la
+                                rigueur de conception.</p>
+                            <div class="ptags">
+                                <span class="ptag">Qt</span>
+                                <span class="ptag">C++</span>
+                                <span class="ptag o">POO</span>
+                                <span class="ptag o">Simulation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- DEV WEB -->
+            <div class="proj-panel" id="tab-web">
+                <p class="tab-desc">Projets réalisés en <span class="hl">Bachelor Dev Web &amp; IA à l'EFREI</span> —
+                    axés sécurité applicative et développement full-stack.</p>
+                <div class="projects-grid">
+
+                    <div class="project-card">
+                        <div class="project-top">🛡️</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Marketplace Sécurisée</h3>
+                            <p class="project-desc">Application e-commerce full-stack avec détection automatique de
+                                fraudes par analyse comportementale. Architecture JWT + 2FA, protection XSS/CSRF
+                                complète.</p>
+                            <div class="ptags">
+                                <span class="ptag">React</span>
+                                <span class="ptag">Node.js</span>
+                                <span class="ptag">JWT</span>
+                                <span class="ptag">2FA</span>
+                                <span class="ptag">MongoDB</span>
+                                <span class="ptag o">Full-Stack</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-top">🎬</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Application de Streaming <span class="project-github"><a
+                                        href="https://github.com/Tamim-Tur/film" target="_blank" rel="noopener">↗
+                                        GitHub</a></span></h3>
+                            <p class="project-desc">Plateforme de streaming type Netflix : catalogue films/séries par
+                                catégories, gestion des favoris, authentification JWT et lecteur vidéo intégré.
+                                Architecture micro-services containerisée via Docker Compose avec isolation réseau et
+                                persistence des données.</p>
+                            <div class="ptags">
+                                <span class="ptag">React</span>
+                                <span class="ptag">Node.js</span>
+                                <span class="ptag">PostgreSQL</span>
+                                <span class="ptag">MongoDB</span>
+                                <span class="ptag">Docker</span>
+                                <span class="ptag">JWT</span>
+                                <span class="ptag o">Full-Stack</span>
+                                <span class="ptag o">DevOps</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NOUVEAU : API Voyages -->
+                    <div class="project-card">
+                        <div class="project-top">✈️</div>
+                        <div class="project-body">
+                            <h3 class="project-title">API Voyages Sécurisée <span class="project-github"><a
+                                        href="https://github.com/Tamim-Tur" target="_blank" rel="noopener">↗
+                                        GitHub</a></span></h3>
+                            <p class="project-desc">API REST complète pour la gestion de voyages : destinations avec
+                                pagination et filtrage avancé, système de réservations multi-statuts et double niveau
+                                d'accès (Utilisateur / Admin). Authentification sécurisée par JWT.</p>
+                            <div class="ptags">
+                                <span class="ptag">Node.js</span>
+                                <span class="ptag">Express</span>
+                                <span class="ptag">JWT</span>
+                                <span class="ptag o">REST API</span>
+                                <span class="ptag o">Backend</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Generateur de citations -->
+                    <div class="project-card">
+                        <div class="project-top">💬</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Générateur de Citations <span class="project-github"><a
+                                        href="https://github.com/Tamim-Tur" target="_blank" rel="noopener">↗
+                                        GitHub</a></span></h3>
+                            <p class="project-desc">Application JavaScript vanilla consommant l'API Chuck Norris :
+                                affichage aléatoire de citations, gestion d'une liste de favoris persistante
+                                (localStorage) et système de retry automatique en cas d'erreur réseau.</p>
+                            <div class="ptags">
+                                <span class="ptag">JavaScript</span>
+                                <span class="ptag">REST API</span>
+                                <span class="ptag">localStorage</span>
+                                <span class="ptag o">Vanilla JS</span>
+                                <span class="ptag o">Frontend</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--APP sportive-->
+                    <div class="project-card">
+                        <div class="project-top">🏃</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Sport App — Suivi Sportif <span class="project-github"><a
+                                        href="https://github.com/Tamim-Tur" target="_blank" rel="noopener">↗
+                                        GitHub</a></span></h3>
+                            <p class="project-desc">Application full-stack de suivi sportif : enregistrement
+                                d'activités, objectifs personnels avec suivi de progression, statistiques par période
+                                (semaine/mois/année) et tableau de bord responsive. Polyglot persistence PostgreSQL +
+                                MongoDB pour les logs. Documentation Swagger intégrée.</p>
+                            <div class="ptags">
+                                <span class="ptag">React</span>
+                                <span class="ptag">Node.js</span>
+                                <span class="ptag">PostgreSQL</span>
+                                <span class="ptag">MongoDB</span>
+                                <span class="ptag">Swagger</span>
+                                <span class="ptag">JWT</span>
+                                <span class="ptag o">Full-Stack</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CROISÉS -->
+            <div class="proj-panel" id="tab-mixte">
+                <p class="tab-desc">Projets combinant compétences <span class="hl">réseaux / embarqué</span> et <span
+                        class="hl-o">développement web</span> — issus de l'alternance chez LEA Networks.</p>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-media">
+                            <img src="FLYING-DRONE.png" alt="Flying Drone affiche" loading="lazy">
+                        </div>
+                        <span class="demo-badge">▶ Aperçu</span>
+                        <div class="project-top">🚁</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Flying Drones — Réseau Autonome</h3>
+                            <p class="project-desc">Projet transverse complet : rédaction du cahier des charges, étude
+                                des besoins, sélection et achat d'un drone programmable. Toutes les phases documentées —
+                                montage mécanique, câblage électronique, programmation embarquée (Raspberry Pi 3B +
+                                Pixhawk) et communication via protocole MAVLink. Rendu avec affiche de présentation.</p>
+                            <div class="ptags">
+                                <span class="ptag">Raspberry Pi</span>
+                                <span class="ptag">Pixhawk</span>
+                                <span class="ptag">MAVLink</span>
+                                <span class="ptag">Python</span>
+                                <span class="ptag o">Embarqué</span>
+                                <span class="ptag o">Electronique</span>
+                                <span class="ptag o">IUT Cachan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-media">
+                            <video src="SWITCH-MODULAIRE.mp4" muted loop playsinline preload="none"></video>
+                        </div>
+                        <span class="demo-badge">▶ Démo</span>
+                        <div class="project-top">📊</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Interface Switch-Modulaire-3D — LEA Networks</h3>
+                            <p class="project-desc">Refonte complète d'une interface de gestion de switch modulaire avec
+                                visualisation 3D interactive (Three.js) et monitoring en temps réel : ports, courant,
+                                tension, puissance.</p>
+                            <div class="ptags">
+                                <span class="ptag">Three.js</span>
+                                <span class="ptag">JavaScript</span>
+                                <span class="ptag o">Réseaux</span>
+                                <span class="ptag o">Temps réel</span>
+                                <span class="ptag o">Alternance</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-media">
+                            <video src="Lea-Pulse.mp4" muted loop playsinline preload="none"></video>
+                        </div>
+                        <span class="demo-badge">▶ Démo</span>
+                        <div class="project-top">🌐</div>
+                        <div class="project-body">
+                            <h3 class="project-title">Portail Client Sécurisé "Lea-Pulse" — LEA Networks</h3>
+                            <p class="project-desc">Portail de gestion d'équipements réseau : authentification 2FA,
+                                génération automatique de devis, service VPN intégré directement dans l'interface web.
+                            </p>
+                            <div class="ptags">
+                                <span class="ptag">OpenVPN</span>
+                                <span class="ptag">React</span>
+                                <span class="ptag">Node.js</span>
+                                <span class="ptag">2FA</span>
+                                <span class="ptag o">Réseaux</span>
+                                <span class="ptag o">Alternance</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- EXPÉRIENCE -->
+        <section id="experience" class="section">
+            <h2 class="section-title"><span class="num">04</span> Expériences <span
+                    class="accent">professionnelles</span></h2>
+            <div class="timeline">
+
+                <div class="exp-item">
+                    <div class="exp-date">JUILLET 2025 — AOUT 2026</div>
+                    <div class="exp-title">Apprenti Développeur Full-Stack</div>
+                    <div class="exp-company">LEA Networks · Alternance</div>
+                    <ul class="exp-desc">
+                        <li>Refonte complète d'une interface de gestion de switch modulaire avec visualisation 3D
+                            interactive (Three.js) — rendu en temps réel des configurations matérielles.</li>
+                        <li>Monitoring de données physiques en temps réel : ouverture/fermeture de ports, suivi du
+                            courant, de la tension et de la puissance.</li>
+                        <li>Automatisation de tests TX/RX (produits télécoms) en Python et rédaction du User Guide
+                            technique complet en anglais.</li>
+                        <li>Développement d'un portail client sécurisé : gestion d'équipements, authentification 2FA,
+                            génération automatique de devis, service VPN intégré.</li>
+                    </ul>
+                </div>
+
+                <div class="exp-item">
+                    <div class="exp-date">AVRIL — JUIN 2025</div>
+                    <div class="exp-title">Stagiaire Électronique &amp; Informatique Industrielle</div>
+                    <div class="exp-company">LEA Networks · Stage</div>
+                    <ul class="exp-desc">
+                        <li>Développement d'un système de banc de test : conception et mise en œuvre d'une solution de
+                            validation fonctionnelle pour équipements réseaux (émetteurs TX / récepteurs RX).</li>
+                        <li>Ingénierie matérielle : réalisation de soudures de précision, câblage structuré et
+                            validation de prototypes électroniques avant mise en production.</li>
+                    </ul>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-date">Decembre 2023-Juin 2024</div>   
+                    <div class="exp-title">Inventoriste – RGIS "Job etudiant"</div>
+                    <div class="exp-company">RGIS-Malakoff</div>
+                    <ul class="exp-desc">
+                        <li>Réalisation d’inventaires physiques en magasin et en entrepôt à l’aide de terminaux de saisie électroniques.</li>
+                        <li>Comptage, identification et classification des produits avec rigueur et précision.</li>
+                        <li>Vérification de l’exactitude des données collectées et signalement des écarts de stock.</li>
+                        <li>Respect des procédures et des normes de qualité afin de garantir la fiabilité des inventaires.</li>
+                        <li>Collaboration avec les équipes sur site pour assurer le bon déroulement des opérations d’inventaire.</li>
+                        <li>Maintien d’un niveau élevé de performance et de concentration lors de longues périodes d’activité physique.</li>
+                        <li>Démonstration d’excellentes compétences organisationnelles et d’une grande attention aux détails.</li>
+                        <li>Conduite de véhicules de l’entreprise pour assurer le transport des équipes d’inventoristes entre différents sites clients.</li>
+                        <li>Participation à des missions d’inventaire au sein de grandes enseignes telles que Hermès,Marionnaud,Galeries Lafayette et Carrefour.</li>
+                        <li>Adaptation rapide à des environnements de travail variés et respect des exigences spécifiques de chaque client.</li>
+                    </ul>
+
+            </div>
+        </section>
+
+        <!-- FORMATION -->
+        <section id="formation" class="section">
+            <h2 class="section-title"><span class="num">05</span> Forma<span class="accent">tion</span></h2>
+            <div class="edu-grid">
+                <div class="edu-card">
+                    <div class="edu-year-badge">2026 – 2028</div>
+                    <div>
+                        <div class="edu-degree">Cycle Ingénieur — Réseaux &amp; Sécurité</div>
+                        <div class="edu-school">EFREI Paris · Île-de-France</div>
+                        <div class="edu-note">🎓 En cours — Recherche alternance dès septembre 2026
+                            (durée 2 à 3 ans) pour approfondir mes compétences en réseaux et sécurité.</div>
+
+                    </div>
+                    <div class="edu-diploma-link">
+                        <a href="typing.webp" target="_blank" class="btn-diploma">
+                            🫡
+                        </a>
+                    </div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-year-badge">2025 – 2026</div>
+                    <div>
+                        <div class="edu-degree">Bachelor — Développement Web &amp; Application</div>
+                        <div class="edu-school">EFREI Paris · Île-de-France</div>
+                        <div class="edu-note">🎓 En cours — Spécialisation en développement web full-stack et sécurité
+                            applicative, avec de nombreux projets pratiques.</div>
+                        <div class="edu-desc">Modules clés : React, Node.js, JWT, 2FA, protection XSS/CSRF, MongoDB, et
+                            bien plus.</div>
+                        <div class="edu-diploma">Diplôme de niveau Bac+3, reconnu pour sa forte orientation pratique et
+                            son adéquation avec les besoins du marché du travail dans le développement web et
+                            l'intelligence artificielle.</div>
+
+                    </div>
+                    <div class="edu-diploma-link">
+                        <a href="cam.webp" target="_blank" class="btn-diploma">
+                            📄 prochainement disponible
+                        </a>
+                    </div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-year-badge">2023 – 2025</div>
+                    <div>
+                        <div class="edu-degree">IUT — Génie Électrique &amp; Informatique Industrielle</div>
+                        <div class="edu-school">Université Paris-Saclay / IUT de Cachan</div>
+                        <div class="edu-note">🎓 Avec mention 'Assez-Bien' </div>
+
+                        <div class="edu-desc">Formation axée sur l'électronique, les systèmes embarqués et
+                            l'informatique industrielle — avec de nombreux projets pratiques.</div>
+                        <div class="edu-desc">Modules clés : Conception de circuits, programmation C/C++ sur
+                            microcontrôleurs ARM, protocoles de communication, fusion de capteurs, et bien plus.</div>
+                        <div class="edu-diploma">Diplôme de niveau Bac+2, équivalent à un BTS, reconnu pour sa forte
+                            composante pratique et son orientation vers les métiers de l'ingénierie électrique et
+                            informatique.</div>
+                    </div>
+                    <div class="edu-diploma-link">
+                        <a href=".pdf" target="_blank" class="btn-diploma">
+                            📄 Consulter le diplôme
+                        </a>
+                    </div>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-year-badge">2023</div>
+                    <div>
+                        <div class="edu-degree">Baccalauréat Mathématiques</div>
+                        <div class="edu-school">Lycée Menzel Jemil · Tunisie</div>
+                        <div class="edu-note">🎓</div>
+                        <div class="edu-desc">Formation scientifique approfondie axée sur les mathématiques, la physique et l'informatique. Cette filière développe de solides compétences en raisonnement analytique, résolution de problèmes complexes, modélisation mathématique et pensée logique, tout en offrant une base rigoureuse en sciences et technologies. </div>
+
+                    </div>
+                    <div class="edu-diploma-link">
+                            <a href="bac-arabe.pdf" target="_blank" class="btn-diploma">
+                                📄 Consulter le diplôme (version original )
+                            </a>
+                            <a href="bac-traduit.pdf" target="_blank" class="btn-diploma">
+                                📄 Consulter le diplôme (version traduite )
+                            </a>
+                        </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LANGUES -->
+        <section id="langues" class="section">
+            <h2 class="section-title"><span class="num">06</span> Lan<span class="accent">gues</span></h2>
+            <div class="langs-wrap">
+                <div class="lang-card">
+                    <div class="lang-flag">🇹🇳</div>
+                    <div>
+                        <div class="lang-name">Arabe</div>
+                        <div class="lang-level">Langue maternelle</div>
+                        <div class="lang-note">اللغة العربية لغتي الأم، وأتقنها بطلاقة في التحدث والكتابة</div>
+                    </div>
+                </div>
+                <div class="lang-card">
+                    <div class="lang-flag">🇫🇷</div>
+                    <div>
+                        <div class="lang-name">Français</div>
+                        <div class="lang-level">C2 — Bilingue</div>
+                        <div class="lang-note">Ma deuxième langue, que je maîtrise parfaitement à l’oral comme à
+                            l’écrit.</div>
+                    </div>
+                </div>
+                <div class="lang-card">
+                    <div class="lang-flag">🇬🇧</div>
+                    <div>
+                        <div class="lang-name">Anglais</div>
+                        <div class="lang-level">C2 — Bilingue</div>
+                        <div class="lang-note">I am fluent in English and can communicate effectively in both written
+                            and spoken forms.</div>
+                    </div>
+                </div>
+                <div class="lang-card">
+                    <div class="lang-flag">🇹🇷</div>
+                    <div>
+                        <div class="lang-name">Turc</div>
+                        <div class="lang-level">A2</div>
+                        <div class="lang-note">Merhaba! Türkçe öğreniyorum ve yeni insanlarla tanışıp Türkçe pratik
+                            yapmaktan memnuniyet duyarım.</div>
+                    </div>
+                </div>
+                <div class="lang-card">
+                    <div class="lang-flag">🇮🇹</div>
+                    <div>
+                        <div class="lang-name">Italien</div>
+                        <div class="lang-level">A2</div>
+                        <div class="lang-note">Mi farà piacere conoscere nuove persone e chiacchierare un po' in
+                            italiano!</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+            <div class="contact-box">
+                <h2>Prenons contact</h2>
+                <p>Disponible pour une alternance Cycle Ingénieur Réseaux &amp; Sécurité dès septembre 2026 (2–3 ans).
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:tamimturki624@gmail.com" class="contact-link">📧 tamimturki624@gmail.com</a>
+                    <a href="tel:+33621674871" class="contact-link">📞 +33 6 21 67 48 71</a>
+                    <a href="https://linkedin.com/in/Mohamed-Tamim-Turki" class="contact-link" target="_blank">💼
+                        LinkedIn</a>
+                    <a href="cv.pdf" download class="contact-link orange">📄 Télécharger le CV</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Aperçu du projet">
+        <div class="lightbox-inner" id="lightbox-inner">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Fermer">✕</button>
+        </div>
+    </div>
+
+    <button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <footer>
+        <p>© 2026 Tamim Turki · Futur Ingénieur Réseaux &amp; Sécurité · EFREI Paris</p>
+    </footer>
+
+    <script>
+        // ─── LIGHTBOX ───
+        const lightbox = document.getElementById('lightbox');
+        const lightboxInner = document.getElementById('lightbox-inner');
+        const lightboxClose = document.getElementById('lightbox-close');
+        let activeVideo = null;
+
+        function openLightbox(card) {
+            const media = card.querySelector('.project-media');
+            if (!media) return;
+
+            const video = media.querySelector('video');
+            const img = media.querySelector('img');
+            const title = card.querySelector('.project-title')?.textContent?.trim() || '';
+
+            // Vider le contenu précédent (sauf le bouton ✕)
+            Array.from(lightboxInner.children).forEach(child => {
+                if (child !== lightboxClose) child.remove();
+            });
+
+            if (video) {
+                const clone = document.createElement('video');
+                clone.src = video.src;
+                clone.autoplay = true;
+                clone.muted = true;
+                clone.loop = true;
+                clone.playsInline = true;
+                clone.controls = true;
+                lightboxInner.appendChild(clone);
+                clone.play().catch(() => { });
+                activeVideo = clone;
+            } else if (img) {
+                const clone = document.createElement('img');
+                clone.src = img.src;
+                clone.alt = img.alt || title;
+                lightboxInner.appendChild(clone);
+            }
+
+            if (title) {
+                const titleEl = document.createElement('div');
+                titleEl.className = 'lightbox-title';
+                titleEl.textContent = title;
+                lightboxInner.appendChild(titleEl);
+            }
+
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            document.body.style.overflow = '';
+            if (activeVideo) {
+                activeVideo.pause();
+                activeVideo = null;
+            }
+            // Nettoyer après la transition
+            setTimeout(() => {
+                Array.from(lightboxInner.children).forEach(child => {
+                    if (child !== lightboxClose) child.remove();
+                });
+            }, 320);
+        }
+
+        // Clic sur une carte avec média → lightbox
+        document.querySelectorAll('.project-card').forEach(card => {
+            const media = card.querySelector('.project-media');
+            if (!media) return;
+
+            card.classList.add('has-media');
+
+            card.addEventListener('click', (e) => {
+                // Ne pas déclencher si clic sur un lien interne
+                if (e.target.closest('a')) return;
+                openLightbox(card);
+            });
+        });
+
+        // Fermeture
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // ─── VIDEO HOVER (aperçu en hover, toujours actif) ───
+        document.querySelectorAll('.project-card').forEach(card => {
+            const video = card.querySelector('.project-media video');
+            if (!video) return;
+            card.addEventListener('mouseenter', () => video.play().catch(() => { }));
+            card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+        });
+
+        // ─── SCROLL REVEAL ───
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.project-card,.exp-item,.edu-card,.skill-cat,.lang-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(18px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            obs.observe(el);
+        });
+
+        // ─── BACK TO TOP ───
+        const btt = document.getElementById('btt');
+        window.addEventListener('scroll', () => btt.classList.toggle('show', scrollY > 400));
+
+        // ─── SMOOTH SCROLL ───
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // ─── TABS ───
+        const tabs = document.querySelectorAll(".proj-tab");
+        const panels = document.querySelectorAll(".proj-panel");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                tabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                panels.forEach(p => p.classList.remove("active"));
+                const target = document.getElementById("tab-" + tab.dataset.tab);
+                if (target) target.classList.add("active");
+            });
+        });
+    </script>
+</body>
+
+</html>
