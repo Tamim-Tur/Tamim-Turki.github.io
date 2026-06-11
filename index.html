@@ -1120,13 +1120,291 @@
             border-color: var(--cyan);
             box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
         }
+
+        /* ─── CANVAS PARTICULES ─── */
+        #particle-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.55;
+        }
+
+        /* ─── ORBES FLOTTANTS ─── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(80px);
+            animation: orbFloat 18s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(0,255,200,0.09) 0%, transparent 70%);
+            top: -100px; left: -120px;
+            animation-duration: 22s;
+        }
+        .orb-2 {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(255,107,43,0.07) 0%, transparent 70%);
+            bottom: 10%; right: -80px;
+            animation-duration: 17s;
+            animation-delay: -7s;
+        }
+        .orb-3 {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(57,255,140,0.05) 0%, transparent 70%);
+            top: 50%; left: 40%;
+            animation-duration: 25s;
+            animation-delay: -12s;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0,0) scale(1); }
+            33%       { transform: translate(40px,-30px) scale(1.08); }
+            66%       { transform: translate(-25px,20px) scale(0.95); }
+        }
+
+        /* ─── ILLUSTRATION FLOTTANTE HERO ─── */
+        .hero-illustration {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 340px;
+            height: 340px;
+            opacity: 0.22;
+            pointer-events: none;
+            animation: heroIllFloat 6s ease-in-out infinite;
+        }
+        @media (max-width: 900px) { .hero-illustration { display: none; } }
+        @keyframes heroIllFloat {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50%       { transform: translateY(calc(-50% - 14px)) rotate(3deg); }
+        }
+
+        /* ─── ILLUSTRATIONS SECTION (SVG décoratif à droite des titres) ─── */
+        .section-illus {
+            position: absolute;
+            right: 0;
+            top: -20px;
+            opacity: 0.07;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        .section:hover .section-illus { opacity: 0.12; }
+        .section { position: relative; }
+
+        /* ─── SKILL BAR EFFECT ─── */
+        .skill-cat {
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-cat::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,200,0.04), transparent);
+            transition: left 0.7s ease;
+        }
+        .skill-cat:hover::before { left: 150%; }
+
+        /* ─── GLITCH TEXT EFFECT ─── */
+        .hero h1 .last {
+            position: relative;
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--cyan);
+        }
+        .hero h1 .last::before,
+        .hero h1 .last::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            -webkit-text-stroke: 2px transparent;
+            color: transparent;
+        }
+        .hero h1 .last::before {
+            -webkit-text-stroke: 2px var(--orange);
+            animation: glitch1 4s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        }
+        .hero h1 .last::after {
+            -webkit-text-stroke: 2px var(--green);
+            animation: glitch2 4s infinite;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        }
+        @keyframes glitch1 {
+            0%,90%,100% { transform: translate(0); opacity: 0; }
+            91% { transform: translate(-3px,1px); opacity: 0.7; }
+            93% { transform: translate(3px,-1px); opacity: 0.7; }
+            95% { transform: translate(0); opacity: 0; }
+        }
+        @keyframes glitch2 {
+            0%,92%,100% { transform: translate(0); opacity: 0; }
+            93% { transform: translate(3px,2px); opacity: 0.6; }
+            95% { transform: translate(-2px,-1px); opacity: 0.6; }
+            97% { transform: translate(0); opacity: 0; }
+        }
+
+        /* ─── TOPO LINES BACKGROUND ─── */
+        .topo-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.035;
+        }
+
+        /* ─── FLOATING DATA PACKETS on timeline ─── */
+        .timeline-packet {
+            position: absolute;
+            left: -1px;
+            width: 3px;
+            height: 16px;
+            background: linear-gradient(180deg, var(--cyan), transparent);
+            border-radius: 2px;
+            animation: packetFlow 3s linear infinite;
+        }
+        @keyframes packetFlow {
+            0%   { top: 0; opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* ─── LANG CARD SKILL BAR ─── */
+        .lang-bar-wrap {
+            margin-top: 0.5rem;
+            height: 3px;
+            background: rgba(0,255,200,0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .lang-bar {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--green));
+            width: 0%;
+            transition: width 1s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* ─── CONTACT BOX NOISE TEXTURE ─── */
+        .contact-box {
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* ─── ABOUT CARD CIRCUIT LINES ─── */
+        .about-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .about-card::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; right: -20px;
+            width: 160px; height: 160px;
+            background-image: url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300ffe0' stroke-width='1' opacity='0.15'%3E%3Ccircle cx='80' cy='80' r='60'/%3E%3Ccircle cx='80' cy='80' r='40'/%3E%3Ccircle cx='80' cy='80' r='20'/%3E%3Cline x1='80' y1='20' x2='80' y2='140'/%3E%3Cline x1='20' y1='80' x2='140' y2='80'/%3E%3Cline x1='37' y1='37' x2='123' y2='123'/%3E%3Cline x1='123' y1='37' x2='37' y2='123'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ─── SECTION ENTER ANIMATION ─── */
+        .section-title {
+            overflow: hidden;
+        }
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--cyan);
+            box-shadow: 0 0 8px var(--cyan);
+        }
+        .section-title {
+            padding-left: 1rem;
+        }
     </style>
 </head>
 
 <body>
+    <!-- PARTICULES & ORBES -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
     <!-- HERO -->
     <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <!-- TOPO BACKGROUND -->
+        <div class="topo-bg">
+            <svg width="100%" height="100%" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#00ffe0" stroke-width="1">
+                    <path d="M0,350 Q150,280 300,350 T600,350 T900,350 T1200,350"/>
+                    <path d="M0,330 Q150,255 300,330 T600,330 T900,330 T1200,330"/>
+                    <path d="M0,310 Q150,230 300,310 T600,310 T900,310 T1200,310"/>
+                    <path d="M0,290 Q150,205 300,290 T600,290 T900,290 T1200,290"/>
+                    <path d="M0,370 Q150,305 300,370 T600,370 T900,370 T1200,370"/>
+                    <path d="M0,390 Q150,330 300,390 T600,390 T900,390 T1200,390"/>
+                    <path d="M0,410 Q150,355 300,410 T600,410 T900,410 T1200,410"/>
+                </g>
+            </svg>
+        </div>
+        <!-- HERO ILLUSTRATION: réseau nerveux -->
+        <svg class="hero-illustration" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#00ffe0" stroke-width="1">
+                <!-- Nœuds du réseau -->
+                <circle cx="170" cy="170" r="18" stroke-width="1.5" opacity="0.9"/>
+                <circle cx="170" cy="170" r="32" stroke-dasharray="4 4" opacity="0.5">
+                    <animateTransform attributeName="transform" type="rotate" from="0 170 170" to="360 170 170" dur="12s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="170" cy="170" r="55" stroke-dasharray="2 6" opacity="0.3">
+                    <animateTransform attributeName="transform" type="rotate" from="360 170 170" to="0 170 170" dur="20s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Satellites -->
+                <circle cx="80" cy="80" r="8" fill="rgba(0,255,200,0.15)" stroke-width="1.5"/>
+                <circle cx="260" cy="80" r="6" fill="rgba(255,107,43,0.12)" stroke="#ff6b2b" stroke-width="1.5"/>
+                <circle cx="80" cy="260" r="10" fill="rgba(57,255,140,0.1)" stroke="#39ff8c" stroke-width="1.5"/>
+                <circle cx="260" cy="260" r="7" fill="rgba(0,255,200,0.1)" stroke-width="1.5"/>
+                <circle cx="170" cy="55" r="5" fill="rgba(255,209,102,0.1)" stroke="#ffd166" stroke-width="1.5"/>
+                <circle cx="170" cy="285" r="5" fill="rgba(0,255,200,0.1)" stroke-width="1.5"/>
+                <!-- Connexions -->
+                <line x1="170" y1="152" x2="80" y2="88" stroke-dasharray="3 3" opacity="0.5"/>
+                <line x1="170" y1="152" x2="260" y2="86" stroke="#ff6b2b" stroke-dasharray="3 3" opacity="0.4"/>
+                <line x1="170" y1="188" x2="80" y2="252" stroke="#39ff8c" stroke-dasharray="3 3" opacity="0.4"/>
+                <line x1="170" y1="188" x2="260" y2="253" stroke-dasharray="3 3" opacity="0.4"/>
+                <line x1="170" y1="152" x2="170" y2="60" stroke="#ffd166" stroke-dasharray="2 4" opacity="0.4"/>
+                <line x1="170" y1="188" x2="170" y2="280" stroke-dasharray="2 4" opacity="0.4"/>
+                <!-- Pulse sur le nœud central -->
+                <circle cx="170" cy="170" r="18" fill="none" stroke="#00ffe0" stroke-width="2" opacity="0">
+                    <animate attributeName="r" from="18" to="80" dur="2.5s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" from="0.6" to="0" dur="2.5s" repeatCount="indefinite"/>
+                </circle>
+            </g>
+            <!-- Points de données animés sur les lignes -->
+            <g fill="#00ffe0">
+                <circle r="2.5">
+                    <animateMotion path="M170,152 L80,88" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle r="2" fill="#ff6b2b">
+                    <animateMotion path="M170,152 L260,86" dur="2.5s" repeatCount="indefinite"/>
+                </circle>
+            </g>
+        </svg>
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
         <div class="hero-content">
@@ -1140,7 +1418,7 @@
                 <p class="hero-eyebrow">Futur ingénieur</p>
                 <h1>
                     <span class="first">Tamim</span>
-                    <span class="last">Turki</span>
+                    <span class="last" data-text="Turki">Turki</span>
                 </h1>
                 <p class="hero-sub">Réseaux &amp; Sécurité · Full-Stack · Systèmes Embarqués</p>
                 <p class="hero-alt">// Recherche alternance · Cycle Ingénieur · Dès sept. 2026 · 2–3 ans</p>
@@ -1196,6 +1474,14 @@
         <section id="competences" class="section">
             <h2 class="section-title"><span class="num">02</span> Compétences <span class="accent">techniques</span>
             </h2>
+            <!-- Illustration : shield cybersecurity -->
+            <svg class="section-illus" width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#00ffe0" stroke-width="1.5">
+                    <path d="M60,10 L100,28 L100,65 Q100,95 60,112 Q20,95 20,65 L20,28 Z" opacity="0.8"/>
+                    <path d="M60,25 L88,38 L88,65 Q88,85 60,97 Q32,85 32,65 L32,38 Z" opacity="0.4"/>
+                    <path d="M48,60 L57,70 L75,50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+            </svg>
             <div class="skills-grid">
 
                 <div class="skill-cat">
@@ -1287,6 +1573,21 @@
         <!-- PROJETS -->
         <section id="projets" class="section">
             <h2 class="section-title"><span class="num">03</span> Projets <span class="accent">techniques</span></h2>
+            <!-- Illustration : circuit board -->
+            <svg class="section-illus" width="130" height="120" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#ff6b2b" stroke-width="1.2">
+                    <rect x="40" y="35" width="50" height="50" rx="4" opacity="0.7"/>
+                    <rect x="50" y="45" width="30" height="30" rx="2" opacity="0.4"/>
+                    <line x1="40" y1="55" x2="15" y2="55"/><circle cx="12" cy="55" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="40" y1="65" x2="15" y2="65"/><circle cx="12" cy="65" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="90" y1="55" x2="115" y2="55"/><circle cx="118" cy="55" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="90" y1="65" x2="115" y2="65"/><circle cx="118" cy="65" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="55" y1="35" x2="55" y2="10"/><circle cx="55" cy="7" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="75" y1="35" x2="75" y2="10"/><circle cx="75" cy="7" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="55" y1="85" x2="55" y2="110"/><circle cx="55" cy="113" r="4" fill="rgba(255,107,43,0.2)"/>
+                    <line x1="75" y1="85" x2="75" y2="110"/><circle cx="75" cy="113" r="4" fill="rgba(255,107,43,0.2)"/>
+                </g>
+            </svg>
 
             <!-- TABS -->
             <div class="proj-tabs">
@@ -1580,6 +1881,8 @@
             <h2 class="section-title"><span class="num">04</span> Expériences <span
                     class="accent">professionnelles</span></h2>
             <div class="timeline">
+            <div class="timeline-packet" style="animation-delay:0s;"></div>
+            <div class="timeline-packet" style="animation-delay:1s;"></div>
 
                 <div class="exp-item">
                     <div class="exp-date">JUILLET 2025 — AOUT 2026</div>
@@ -1723,6 +2026,7 @@
                         <div class="lang-name">Arabe</div>
                         <div class="lang-level">Langue maternelle</div>
                         <div class="lang-note">اللغة العربية لغتي الأم، وأتقنها بطلاقة في التحدث والكتابة</div>
+                        <div class="lang-bar-wrap"><div class="lang-bar" data-width="100"></div></div>
                     </div>
                 </div>
                 <div class="lang-card">
@@ -1732,6 +2036,7 @@
                         <div class="lang-level">C2 — Bilingue</div>
                         <div class="lang-note">Ma deuxième langue, que je maîtrise parfaitement à l’oral comme à
                             l’écrit.</div>
+                        <div class="lang-bar-wrap"><div class="lang-bar" data-width="100"></div></div>
                     </div>
                 </div>
                 <div class="lang-card">
@@ -1741,6 +2046,7 @@
                         <div class="lang-level">C2 — Bilingue</div>
                         <div class="lang-note">I am fluent in English and can communicate effectively in both written
                             and spoken forms.</div>
+                        <div class="lang-bar-wrap"><div class="lang-bar" data-width="100"></div></div>
                     </div>
                 </div>
                 <div class="lang-card">
@@ -1750,6 +2056,7 @@
                         <div class="lang-level">A2</div>
                         <div class="lang-note">Merhaba! Türkçe öğreniyorum ve yeni insanlarla tanışıp Türkçe pratik
                             yapmaktan memnuniyet duyarım.</div>
+                        <div class="lang-bar-wrap"><div class="lang-bar" data-width="30"></div></div>
                     </div>
                 </div>
                 <div class="lang-card">
@@ -1759,6 +2066,7 @@
                         <div class="lang-level">A2</div>
                         <div class="lang-note">Mi farà piacere conoscere nuove persone e chiacchierare un po' in
                             italiano!</div>
+                        <div class="lang-bar-wrap"><div class="lang-bar" data-width="30"></div></div>
                     </div>
                 </div>
             </div>
@@ -1932,6 +2240,93 @@
                 if (target) target.classList.add("active");
             });
         });
+        // ─── LANG BARS (Intersection Observer) ───
+        const langObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('revealed');
+                    e.target.querySelectorAll('.lang-bar').forEach(bar => {
+                        const w = bar.dataset.width || '100';
+                        bar.style.width = w + '%';
+                    });
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.lang-card').forEach(c => langObs.observe(c));
+
+        // ─── PARTICLE CANVAS ───
+        (function() {
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H, particles = [], connections = [];
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const N = 55;
+            for (let i = 0; i < N; i++) {
+                particles.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: (Math.random() - 0.5) * 0.35,
+                    r: Math.random() * 1.5 + 0.5,
+                    hue: Math.random() < 0.75 ? 'cyan' : (Math.random() < 0.5 ? 'orange' : 'green')
+                });
+            }
+
+            const colors = { cyan: 'rgba(0,255,200,', orange: 'rgba(255,107,43,', green: 'rgba(57,255,140,' };
+
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+                // Connections
+                for (let i = 0; i < N; i++) {
+                    for (let j = i + 1; j < N; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 130) {
+                            const alpha = (1 - dist/130) * 0.25;
+                            ctx.beginPath();
+                            ctx.strokeStyle = colors[particles[i].hue] + alpha + ')';
+                            ctx.lineWidth = 0.6;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                // Dots
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = colors[p.hue] + '0.7)';
+                    ctx.fill();
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < -10) p.x = W + 10;
+                    if (p.x > W + 10) p.x = -10;
+                    if (p.y < -10) p.y = H + 10;
+                    if (p.y > H + 10) p.y = -10;
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        })();
+
+        // ─── CURSOR GLOW ───
+        (function() {
+            const glow = document.createElement('div');
+            glow.style.cssText = 'position:fixed;pointer-events:none;z-index:9998;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,200,0.04) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left 0.15s ease,top 0.15s ease;';
+            document.body.appendChild(glow);
+            document.addEventListener('mousemove', e => {
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+        })();
     </script>
 </body>
 
