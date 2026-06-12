@@ -332,6 +332,69 @@
             border-bottom-color: var(--cyan);
         }
 
+        /* ─── TRANSLATE BUTTON ─── */
+        .translate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.42rem 1rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            border: 1px solid rgba(0,255,200,0.35);
+            background: rgba(0,255,200,0.06);
+            color: var(--cyan);
+            transition: all 0.25s;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .translate-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(0,255,200,0.08), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+        .translate-btn:hover::before { transform: translateX(100%); }
+        .translate-btn:hover {
+            border-color: var(--cyan);
+            background: rgba(0,255,200,0.12);
+            box-shadow: 0 0 18px rgba(0,255,200,0.2);
+            transform: translateY(-1px);
+        }
+        .translate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .translate-btn .spin {
+            animation: btnSpin 0.8s linear infinite;
+            display: inline-block;
+        }
+        @keyframes btnSpin { to { transform: rotate(360deg); } }
+
+        .translate-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0.45rem 1.5rem;
+            background: rgba(5,12,16,0.7);
+            border-bottom: 1px solid var(--border);
+            gap: 0.75rem;
+            backdrop-filter: blur(10px);
+        }
+        .translate-lang-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.08em;
+        }
+
         /* ─── LAYOUT ─── */
         .container {
             max-width: 1000px;
@@ -1605,6 +1668,15 @@
         </div>
     </header>
 
+    <!-- TRANSLATE BAR -->
+    <div class="translate-bar">
+        <span class="translate-lang-label" id="translate-label">🌐 LANGUE</span>
+        <button class="translate-btn" id="translate-btn" onclick="handleTranslate()">
+            <span id="translate-btn-icon">🇬🇧</span>
+            <span id="translate-btn-text">EN</span>
+        </button>
+    </div>
+
     <!-- NAV -->
     <nav class="nav">
         <ul>
@@ -2668,6 +2740,356 @@
                 glow.style.top = e.clientY + 'px';
             });
         })();
+        
+        // ─── TRANSLATION DATA (pre-built) ───
+        const EN_TRANSLATIONS = {
+    "hero_eyebrow": "Future Engineer",
+    "hero_sub": "Networks & Security · Full-Stack · Embedded Systems",
+    "hero_alt": "// Seeking work-study · Engineering Degree · From Sept. 2026 · 2–3 years",
+    "scroll_hint": "See more",
+    "status_dot_title": "Available from September 2026",
+    "nav_profil": "Profile",
+    "nav_competences": "Skills",
+    "nav_projets": "Projects",
+    "nav_experience": "Experience",
+    "nav_formation": "Education",
+    "nav_langues": "Languages",
+    "nav_contact": "Contact",
+    "section_title_profil": "About me",
+    "section_title_competences": "Technical skills",
+    "section_title_projets": "Technical projects",
+    "section_title_experience": "Professional experience",
+    "section_title_formation": "Education",
+    "section_title_langues": "Languages",
+    "about_p_0": "Currently completing a <span class=\"hl\">Bachelor's degree (B3) in Web Development &amp; AI at EFREI Paris</span>, I combine the industrial rigor of a <span class=\"hl\">DUT GEII</span> with expertise in software development, embedded systems, and application security — gained through my work-study placement at <span class=\"hl-o\">LEA Networks</span> on real networking equipment.",
+    "about_p_1": "I am looking for a work-study contract as part of an <span class=\"hl\">Engineering Degree in Networks &amp; Security</span> (starting September 2026, duration 2 to 3 years) to contribute to the design of robust network infrastructures and the implementation of advanced security solutions.",
+    "about_p_2": "Passionate about violin for discipline and photography for creativity — qualities I also apply in my technical work: rigor, precision, and attention to detail.",
+    "sk_tab_0": "Networks",
+    "sk_tab_1": "Cybersecurity",
+    "sk_tab_2": "Web Full-Stack",
+    "sk_tab_3": "DevOps & Cloud",
+    "sk_tab_4": "Data & AI",
+    "sk_tab_5": "Embedded",
+    "sk_bar_0": "TCP/IP · IPv4/IPv6",
+    "sk_bar_1": "VLAN · NAT · DHCP",
+    "sk_bar_2": "Wireshark · tcpdump",
+    "sk_bar_3": "OpenVPN · WireGuard",
+    "sk_bar_4": "pfSense",
+    "sk_bar_5": "Advanced DNS",
+    "sk_bar_6": "JWT · 2FA Auth",
+    "sk_bar_7": "XSS / CSRF Protection",
+    "sk_bar_8": "VPN · Tunneling",
+    "sk_bar_9": "Application Security",
+    "sk_bar_10": "pfSense · Firewall",
+    "sk_bar_11": "React · JavaScript",
+    "sk_bar_12": "Node.js · Express",
+    "sk_bar_13": "REST API",
+    "sk_bar_14": "MongoDB · PostgreSQL",
+    "sk_bar_15": "Three.js",
+    "sk_bar_16": "Docker · Docker Compose",
+    "sk_bar_17": "Git · CI/CD",
+    "sk_bar_18": "Linux (Debian, Ubuntu)",
+    "sk_bar_19": "AWS · Azure",
+    "sk_bar_20": "Kubernetes · Terraform",
+    "sk_bar_21": "Grafana · VMware",
+    "sk_bar_22": "Python",
+    "sk_bar_23": "Pandas · NumPy",
+    "sk_bar_24": "Scikit-learn",
+    "sk_bar_25": "Anomaly Detection",
+    "sk_bar_26": "Sensor Fusion",
+    "sk_bar_27": "C / C++",
+    "sk_bar_28": "ARM Keil",
+    "sk_bar_29": "KiCad · PCB Design",
+    "sk_bar_30": "PSoC Creator",
+    "sk_bar_31": "Precision Soldering",
+    "sk_val_0": "Expert",
+    "sk_val_1": "Advanced",
+    "sk_val_2": "Advanced",
+    "sk_val_3": "Advanced",
+    "sk_val_4": "Intermediate",
+    "sk_val_5": "Intermediate",
+    "sk_val_6": "Expert",
+    "sk_val_7": "Advanced",
+    "sk_val_8": "Advanced",
+    "sk_val_9": "Advanced",
+    "sk_val_10": "Intermediate",
+    "sk_val_11": "Expert",
+    "sk_val_12": "Expert",
+    "sk_val_13": "Advanced",
+    "sk_val_14": "Advanced",
+    "sk_val_15": "Intermediate",
+    "sk_val_16": "Advanced",
+    "sk_val_17": "Advanced",
+    "sk_val_18": "Intermediate",
+    "sk_val_19": "Intermediate",
+    "sk_val_20": "Basics",
+    "sk_val_21": "Intermediate",
+    "sk_val_22": "Expert",
+    "sk_val_23": "Advanced",
+    "sk_val_24": "Intermediate",
+    "sk_val_25": "Advanced",
+    "sk_val_26": "Intermediate",
+    "sk_val_27": "Advanced",
+    "sk_val_28": "Advanced",
+    "sk_val_29": "Advanced",
+    "sk_val_30": "Intermediate",
+    "sk_val_31": "Intermediate",
+    "proj_tab_dut": "⚙️ DUT GEII",
+    "proj_tab_web": "💻 Web & App Dev",
+    "proj_tab_mixte": "🔗 Cross Projects",
+    "tab_desc_0": "Projects completed during <span class=\"hl\">IUT GEII</span> — focused on hardware, embedded systems, and electronics.",
+    "tab_desc_1": "Projects completed during the <span class=\"hl\">Bachelor Web Dev &amp; AI at EFREI</span> — focused on application security and full-stack development.",
+    "tab_desc_2": "Projects combining <span class=\"hl\">networks / embedded</span> and <span class=\"hl-o\">web development</span> skills — from my work-study at LEA Networks.",
+    "proj_title_0": "Line-Following Robot",
+    "proj_title_1": "Embedded Sensor Fusion",
+    "proj_title_2": "POE Test Bench (Power over Ethernet) — internship \"LEA Networks\"",
+    "proj_title_3": "Ultrasonic Rangefinder — PSoC Creator",
+    "proj_title_4": "Physics Simulation — Qt",
+    "proj_title_5": "Secure Marketplace",
+    "proj_title_6": "Streaming Application <span class=\"project-github\"><a href=\"https://github.com/Tamim-Tur/film\" rel=\"noopener\" target=\"_blank\">↗ GitHub</a></span>",
+    "proj_title_7": "Secure Travel API <span class=\"project-github\"><a href=\"https://github.com/Tamim-Tur\" rel=\"noopener\" target=\"_blank\">↗ GitHub</a></span>",
+    "proj_title_8": "Quote Generator <span class=\"project-github\"><a href=\"https://github.com/Tamim-Tur\" rel=\"noopener\" target=\"_blank\">↗ GitHub</a></span>",
+    "proj_title_9": "Sport App — Activity Tracker <span class=\"project-github\"><a href=\"https://github.com/Tamim-Tur\" rel=\"noopener\" target=\"_blank\">↗ GitHub</a></span>",
+    "proj_title_10": "Flying Drones — Autonomous Network",
+    "proj_title_11": "3D Modular Switch Interface — LEA Networks",
+    "proj_title_12": "\"Lea-Pulse\" Secure Client Portal — LEA Networks",
+    "proj_desc_0": "Full design of an autonomous robot: PCB in KiCad, PID algorithms and infrared detection — from electronic schematic to working prototype.",
+    "proj_desc_1": "Multi-sensor integration (accelerometer + gyroscope) on ARM Keil inclinometer. Fusion algorithm optimization for positioning accuracy.",
+    "proj_desc_2": "Design and implementation of a functional validation solution for network equipment (TX emitters / RX receivers). Precision soldering and structured wiring.",
+    "proj_desc_3": "Design of an ultrasonic rangefinder on PSoC Creator: configuration of ultrasonic signals and implementation of signal processing algorithms. Enhanced skills in hardware/software integration and detailed technical documentation.",
+    "proj_desc_4": "Development of a software project in Qt: object-oriented modeling, real-time collision and bounce management. Research and implementation of specific features, with a focus on problem-solving and design rigor.",
+    "proj_desc_5": "Full-stack e-commerce application with automatic fraud detection via behavioral analysis. JWT + 2FA architecture, complete XSS/CSRF protection.",
+    "proj_desc_6": "Netflix-style streaming platform: films/series catalog by category, favorites management, JWT authentication, and integrated video player. Containerized micro-services architecture via Docker Compose with network isolation and data persistence.",
+    "proj_desc_7": "Complete REST API for travel management: destinations with pagination and advanced filtering, multi-status booking system, and dual access levels (User / Admin). Secure JWT authentication.",
+    "proj_desc_8": "Vanilla JavaScript application consuming the Chuck Norris API: random quote display, persistent favorites list (localStorage), and automatic retry on network error.",
+    "proj_desc_9": "Full-stack sports tracking application: activity logging, personal goals with progress tracking, statistics by period (week/month/year), and responsive dashboard. Polyglot persistence PostgreSQL + MongoDB for logs. Integrated Swagger documentation.",
+    "proj_desc_10": "Complete cross-disciplinary project: requirements writing, needs analysis, selection and purchase of a programmable drone. All phases documented — mechanical assembly, electronic wiring, embedded programming (Raspberry Pi 3B + Pixhawk), and communication via MAVLink protocol. Delivered with a presentation poster.",
+    "proj_desc_11": "Complete redesign of a modular switch management interface with interactive 3D visualization (Three.js) and real-time monitoring: ports, current, voltage, power.",
+    "proj_desc_12": "Network equipment management portal: 2FA authentication, automatic quote generation, VPN service integrated directly into the web interface.",
+    "demo_0": "▶ Preview",
+    "demo_1": "▶ Demo",
+    "demo_2": "▶ Demo",
+    "exp_date_0": "JULY 2025 — AUGUST 2026",
+    "exp_date_1": "APRIL — JUNE 2025",
+    "exp_date_2": "December 2023 – June 2024",
+    "exp_title_0": "Full-Stack Developer Apprentice",
+    "exp_title_1": "Electronics & Industrial IT Intern",
+    "exp_title_2": "Inventory Specialist – RGIS \"Student Job\"",
+    "exp_company_0": "LEA Networks · Work-Study",
+    "exp_company_1": "LEA Networks · Internship",
+    "exp_company_2": "RGIS-Malakoff",
+    "exp_desc_0": "\n<li>Complete redesign of a modular switch management interface with interactive 3D visualization (Three.js) — real-time rendering of hardware configurations.</li>\n<li>Real-time physical data monitoring: port open/close, current, voltage, and power tracking.</li>\n<li>Automated TX/RX testing (telecom products) in Python and writing of the complete technical User Guide in English.</li>\n<li>Development of a secure client portal: equipment management, 2FA authentication, automatic quote generation, integrated VPN service.</li>\n",
+    "exp_desc_1": "\n<li>Development of a test bench system: design and implementation of a functional validation solution for network equipment (TX emitters / RX receivers).</li>\n<li>Hardware engineering: precision soldering, structured wiring, and validation of electronic prototypes before production.</li>\n",
+    "exp_desc_2": "\n<li>Conducting physical inventory counts in stores and warehouses using electronic handheld terminals.</li>\n<li>Counting, identifying, and classifying products with rigor and precision.</li>\n<li>Verifying accuracy of collected data and reporting stock discrepancies.</li>\n<li>Adhering to procedures and quality standards to ensure inventory reliability.</li>\n<li>Collaborating with on-site teams to ensure smooth inventory operations.</li>\n<li>Maintaining high performance and focus during extended physical activity periods.</li>\n<li>Demonstrating excellent organizational skills and strong attention to detail.</li>\n<li>Driving company vehicles to transport inventory teams between client sites.</li>\n<li>Participating in inventory missions at major retailers such as Hermès, Marionnaud, Galeries Lafayette, and Carrefour.</li>\n<li>Quickly adapting to varied work environments and meeting each client's specific requirements.</li>\n",
+    "edu_degree_0": "Engineering Degree — Networks & Security",
+    "edu_degree_1": "Bachelor's — Web & Application Development",
+    "edu_degree_2": "IUT — Electrical Engineering & Industrial IT",
+    "edu_degree_3": "Baccalauréat in Mathematics",
+    "edu_school_0": "EFREI Paris · Île-de-France",
+    "edu_school_1": "EFREI Paris · Île-de-France",
+    "edu_school_2": "Université Paris-Saclay / IUT de Cachan",
+    "edu_school_3": "Lycée Menzel Jemil · Tunisia",
+    "edu_note_0": "🎓 In progress — Seeking work-study placement from September 2026 (2 to 3 years) to deepen my skills in networks and security.",
+    "edu_note_1": "🎓 In progress — Specialization in full-stack web development and application security, with numerous hands-on projects.",
+    "edu_note_2": "🎓 Graduated with Honours",
+    "edu_note_3": "🎓",
+    "edu_desc_0": "Key modules: React, Node.js, JWT, 2FA, XSS/CSRF protection, MongoDB, and more.",
+    "edu_desc_1": "Training focused on electronics, embedded systems and industrial IT — with numerous hands-on projects.",
+    "edu_desc_2": "Key modules: Circuit design, C/C++ programming on ARM microcontrollers, communication protocols, sensor fusion, and more.",
+    "edu_desc_3": "In-depth scientific training focused on mathematics, physics, and computer science. This program develops strong skills in analytical reasoning, complex problem-solving, mathematical modeling, and logical thinking, while providing a rigorous foundation in science and technology.",
+    "edu_diploma_text_0": "Bachelor's level degree (Bac+3), recognized for its strong practical focus and its alignment with labor market needs in web development and artificial intelligence.",
+    "edu_diploma_text_1": "Bac+2 level degree, equivalent to a BTS, recognized for its strong practical component and its orientation toward careers in electrical and computer engineering.",
+    "btn_diploma_0": "🫡",
+    "btn_diploma_1": "📄 Coming soon",
+    "btn_diploma_2": "📄 View diploma",
+    "btn_diploma_3": "📄 View diploma (original version)",
+    "btn_diploma_4": "📄 View diploma (translated version)",
+    "lang_name_0": "Arabic",
+    "lang_name_1": "French",
+    "lang_name_2": "English",
+    "lang_name_3": "Turkish",
+    "lang_name_4": "Italian",
+    "lang_level_0": "Native language",
+    "lang_level_1": "C2 — Bilingual",
+    "lang_level_2": "C2 — Bilingual",
+    "lang_level_3": "A2",
+    "lang_level_4": "A2",
+    "contact_h2": "Let's connect",
+    "contact_p": "Available for a work-study Engineering Degree in Networks & Security from September 2026 (2–3 years).",
+    "contact_dl": "📄 Download CV",
+    "hero_cv": "⬇ Download CV",
+    "footer": "© 2026 Tamim Turki · Future Networks & Security Engineer · EFREI Paris"
+};
+
+        let currentLang = 'fr';
+        let FR_SNAPSHOT = null;
+
+        function snapshotFR() {
+            const s = {};
+            const simple = ['hero_eyebrow','hero_sub','hero_alt','scroll_hint',
+                'nav_profil','nav_competences','nav_projets','nav_experience',
+                'nav_formation','nav_langues','nav_contact',
+                'contact_h2','contact_p','contact_dl','hero_cv','footer'];
+            const simpleMap = {
+                hero_eyebrow: '.hero-eyebrow', hero_sub: '.hero-sub', hero_alt: '.hero-alt',
+                scroll_hint: '.scroll-hint span', nav_profil: '.nav a[href="#profil"]',
+                nav_competences: '.nav a[href="#competences"]', nav_projets: '.nav a[href="#projets"]',
+                nav_experience: '.nav a[href="#experience"]', nav_formation: '.nav a[href="#formation"]',
+                nav_langues: '.nav a[href="#langues"]', nav_contact: '.nav a[href="#contact"]',
+                contact_h2: '.contact-box h2', contact_p: '.contact-box > p',
+                contact_dl: '.contact-link.orange', hero_cv: 'a[href*="cv.pdf"].hero-link.primary',
+                footer: 'footer p'
+            };
+            simple.forEach(k => { const el = document.querySelector(simpleMap[k]); if (el) s[k] = el.textContent; });
+            const dot = document.querySelector('.status-dot');
+            if (dot) s.status_dot_title = dot.getAttribute('title') || '';
+            ['profil','competences','projets','experience','formation','langues'].forEach(id => {
+                const h = document.querySelector('#' + id + ' .section-title');
+                if (h) s['section_title_' + id] = h.innerHTML;
+            });
+            document.querySelectorAll('#profil .about-card p').forEach((el,i) => { s['about_p_'+i] = el.innerHTML; });
+            document.querySelectorAll('.sk-tab').forEach((el,i) => { s['sk_tab_'+i] = el.innerHTML; });
+            document.querySelectorAll('.sk-bar-item > span:first-child').forEach((el,i) => { s['sk_bar_'+i] = el.textContent; });
+            document.querySelectorAll('.sk-val').forEach((el,i) => { s['sk_val_'+i] = el.textContent; });
+            document.querySelectorAll('.proj-tab').forEach(el => { s['proj_tab_'+el.dataset.tab] = el.innerHTML; });
+            document.querySelectorAll('.tab-desc').forEach((el,i) => { s['tab_desc_'+i] = el.innerHTML; });
+            document.querySelectorAll('.project-title').forEach((el,i) => { s['proj_title_'+i] = el.innerHTML; });
+            document.querySelectorAll('.project-desc').forEach((el,i) => { s['proj_desc_'+i] = el.textContent; });
+            document.querySelectorAll('.demo-badge').forEach((el,i) => { s['demo_'+i] = el.textContent; });
+            document.querySelectorAll('.exp-date').forEach((el,i) => { s['exp_date_'+i] = el.textContent; });
+            document.querySelectorAll('.exp-title').forEach((el,i) => { s['exp_title_'+i] = el.textContent; });
+            document.querySelectorAll('.exp-company').forEach((el,i) => { s['exp_company_'+i] = el.textContent; });
+            document.querySelectorAll('.exp-desc').forEach((el,i) => { s['exp_desc_'+i] = el.innerHTML; });
+            document.querySelectorAll('.edu-degree').forEach((el,i) => { s['edu_degree_'+i] = el.textContent; });
+            document.querySelectorAll('.edu-school').forEach((el,i) => { s['edu_school_'+i] = el.textContent; });
+            document.querySelectorAll('.edu-note').forEach((el,i) => { s['edu_note_'+i] = el.textContent; });
+            document.querySelectorAll('.edu-desc').forEach((el,i) => { s['edu_desc_'+i] = el.textContent; });
+            document.querySelectorAll('.edu-diploma').forEach((el,i) => { s['edu_diploma_text_'+i] = el.textContent; });
+            document.querySelectorAll('.btn-diploma').forEach((el,i) => { s['btn_diploma_'+i] = el.textContent; });
+            document.querySelectorAll('.lang-name').forEach((el,i) => { s['lang_name_'+i] = el.textContent; });
+            document.querySelectorAll('.lang-level').forEach((el,i) => { s['lang_level_'+i] = el.textContent; });
+            return s;
+        }
+
+        function applyLang(t, isFR) {
+            const simpleMap = {
+                hero_eyebrow: '.hero-eyebrow', hero_sub: '.hero-sub', hero_alt: '.hero-alt',
+                scroll_hint: '.scroll-hint span', contact_h2: '.contact-box h2',
+                contact_p: '.contact-box > p', contact_dl: '.contact-link.orange',
+                hero_cv: 'a[href*="cv.pdf"].hero-link.primary', footer: 'footer p',
+                nav_profil: '.nav a[href="#profil"]', nav_competences: '.nav a[href="#competences"]',
+                nav_projets: '.nav a[href="#projets"]', nav_experience: '.nav a[href="#experience"]',
+                nav_formation: '.nav a[href="#formation"]', nav_langues: '.nav a[href="#langues"]',
+                nav_contact: '.nav a[href="#contact"]'
+            };
+            Object.entries(simpleMap).forEach(([k, sel]) => {
+                const el = document.querySelector(sel);
+                if (el && t[k] !== undefined) el.textContent = t[k];
+            });
+            const dot = document.querySelector('.status-dot');
+            if (dot && t.status_dot_title) dot.setAttribute('title', t.status_dot_title);
+
+            ['profil','competences','projets','experience','formation','langues'].forEach(id => {
+                const h = document.querySelector('#' + id + ' .section-title');
+                if (!h) return;
+                if (isFR) {
+                    h.innerHTML = t['section_title_' + id];
+                } else {
+                    // Replace only text nodes and .accent span, preserve .num
+                    const numEl = h.querySelector('.num');
+                    const numHTML = numEl ? numEl.outerHTML : '';
+                    const translated = t['section_title_' + id] || '';
+                    const words = translated.split(' ');
+                    const last = words.pop();
+                    const main = words.join(' ');
+                    h.innerHTML = numHTML + ' ' + main + ' <span class="accent">' + last + '</span>';
+                }
+            });
+
+            document.querySelectorAll('#profil .about-card p').forEach((el,i) => {
+                if (t['about_p_'+i] !== undefined) el.innerHTML = t['about_p_'+i];
+            });
+
+            // Skill tabs: restore inner HTML on FR, swap text node on EN
+            document.querySelectorAll('.sk-tab').forEach((el,i) => {
+                if (isFR) { if (t['sk_tab_'+i]) el.innerHTML = t['sk_tab_'+i]; }
+                else {
+                    if (t['sk_tab_'+i] === undefined) return;
+                    const nodes = Array.from(el.childNodes).reverse();
+                    const tn = nodes.find(n => n.nodeType === 3 && n.textContent.trim());
+                    if (tn) tn.textContent = ' ' + t['sk_tab_'+i] + ' ';
+                    else el.textContent = t['sk_tab_'+i];
+                }
+            });
+
+            document.querySelectorAll('.sk-bar-item > span:first-child').forEach((el,i) => {
+                if (t['sk_bar_'+i] !== undefined) el.textContent = t['sk_bar_'+i];
+            });
+            document.querySelectorAll('.sk-val').forEach((el,i) => {
+                if (t['sk_val_'+i] !== undefined) el.textContent = t['sk_val_'+i];
+            });
+
+            // Project tabs: restore innerHTML on FR, swap text node on EN
+            document.querySelectorAll('.proj-tab').forEach(el => {
+                const k = 'proj_tab_' + el.dataset.tab;
+                if (isFR) { if (t[k]) el.innerHTML = t[k]; }
+                else {
+                    if (!t[k]) return;
+                    const nodes = Array.from(el.childNodes).find(n => n.nodeType === 3 && n.textContent.trim());
+                    if (nodes) nodes.textContent = ' ' + t[k].replace(/^\S+\s*/, '');
+                    else el.textContent = t[k];
+                }
+            });
+
+            document.querySelectorAll('.tab-desc').forEach((el,i) => {
+                if (t['tab_desc_'+i] !== undefined) el.innerHTML = t['tab_desc_'+i];
+            });
+            document.querySelectorAll('.project-title').forEach((el,i) => {
+                if (t['proj_title_'+i] !== undefined) el.innerHTML = t['proj_title_'+i];
+            });
+            document.querySelectorAll('.project-desc').forEach((el,i) => {
+                if (t['proj_desc_'+i] !== undefined) el.textContent = t['proj_desc_'+i];
+            });
+            document.querySelectorAll('.demo-badge').forEach((el,i) => {
+                if (t['demo_'+i] !== undefined) el.textContent = t['demo_'+i];
+            });
+            document.querySelectorAll('.exp-date').forEach((el,i) => { if (t['exp_date_'+i]) el.textContent = t['exp_date_'+i]; });
+            document.querySelectorAll('.exp-title').forEach((el,i) => { if (t['exp_title_'+i]) el.textContent = t['exp_title_'+i]; });
+            document.querySelectorAll('.exp-company').forEach((el,i) => { if (t['exp_company_'+i]) el.textContent = t['exp_company_'+i]; });
+            document.querySelectorAll('.exp-desc').forEach((el,i) => { if (t['exp_desc_'+i]) el.innerHTML = t['exp_desc_'+i]; });
+            document.querySelectorAll('.edu-degree').forEach((el,i) => { if (t['edu_degree_'+i]) el.textContent = t['edu_degree_'+i]; });
+            document.querySelectorAll('.edu-school').forEach((el,i) => { if (t['edu_school_'+i]) el.textContent = t['edu_school_'+i]; });
+            document.querySelectorAll('.edu-note').forEach((el,i) => { if (t['edu_note_'+i]) el.textContent = t['edu_note_'+i]; });
+            document.querySelectorAll('.edu-desc').forEach((el,i) => { if (t['edu_desc_'+i]) el.textContent = t['edu_desc_'+i]; });
+            document.querySelectorAll('.edu-diploma').forEach((el,i) => { if (t['edu_diploma_text_'+i]) el.textContent = t['edu_diploma_text_'+i]; });
+            document.querySelectorAll('.btn-diploma').forEach((el,i) => { if (t['btn_diploma_'+i] !== undefined) el.textContent = t['btn_diploma_'+i]; });
+            document.querySelectorAll('.lang-name').forEach((el,i) => { if (t['lang_name_'+i]) el.textContent = t['lang_name_'+i]; });
+            document.querySelectorAll('.lang-level').forEach((el,i) => { if (t['lang_level_'+i]) el.textContent = t['lang_level_'+i]; });
+        }
+
+        function handleTranslate() {
+            const btn = document.getElementById('translate-btn');
+            const btnIcon = document.getElementById('translate-btn-icon');
+            const btnText = document.getElementById('translate-btn-text');
+            const label = document.getElementById('translate-label');
+            if (currentLang === 'fr') {
+                if (!FR_SNAPSHOT) FR_SNAPSHOT = snapshotFR();
+                applyLang(EN_TRANSLATIONS, false);
+                currentLang = 'en';
+                btnIcon.textContent = '🇫🇷';
+                btnText.textContent = 'FR';
+                label.textContent = '\uD83C\uDF10 LANGUAGE';
+                document.documentElement.lang = 'en';
+            } else {
+                applyLang(FR_SNAPSHOT, true);
+                currentLang = 'fr';
+                btnIcon.textContent = '\uD83C\uDDEC\uD83C\uDDE7';
+                btnText.textContent = 'EN';
+                label.textContent = '\uD83C\uDF10 LANGUE';
+                document.documentElement.lang = 'fr';
+            }
+        }
+
         // ─── SKILLS TABS ───
         const skTabs = document.querySelectorAll('.sk-tab');
         const skPanels = document.querySelectorAll('.sk-panel');
