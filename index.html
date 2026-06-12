@@ -1656,7 +1656,7 @@
                     <a href="tel:+33621674871" class="hero-link">📞 +33 6 21 67 48 71</a>
                     <a href="https://www.linkedin.com/in/mohamed-tamim-turki-b93811299" class="hero-link" target="_blank">💼
                         LinkedIn</a>
-                    <a href="cv.pdf" download class="hero-link primary">⬇ Télécharger le CV</a>
+                    <a href="CV-Inge-Tamim-Turki-FR.pdf" download class="hero-link primary">⬇ Télécharger le CV</a>
                 </div>
             </div>
         </div>
@@ -2462,7 +2462,7 @@
                     <a href="tel:+33621674871" class="contact-link">📞 +33 6 21 67 48 71</a>
                     <a href="https://www.linkedin.com/in/mohamed-tamim-turki-b93811299" class="contact-link" target="_blank">💼
                         LinkedIn</a>
-                    <a href="cv.pdf" download class="contact-link orange">📄 Télécharger le CV</a>
+                    <a href="CV-Inge-Tamim-Turki-FR.pdf" download class="contact-link orange">📄 Télécharger le CV</a>
                 </div>
             </div>
         </section>
@@ -2937,7 +2937,7 @@
                 nav_experience: '.nav a[href="#experience"]', nav_formation: '.nav a[href="#formation"]',
                 nav_langues: '.nav a[href="#langues"]', nav_contact: '.nav a[href="#contact"]',
                 contact_h2: '.contact-box h2', contact_p: '.contact-box > p',
-                contact_dl: '.contact-link.orange', hero_cv: 'a[href*="cv.pdf"].hero-link.primary',
+                contact_dl: 'a.contact-link.orange', hero_cv: 'a.hero-link.primary[download]',
                 footer: 'footer p'
             };
             simple.forEach(k => { const el = document.querySelector(simpleMap[k]); if (el) s[k] = el.textContent; });
@@ -2975,8 +2975,8 @@
             const simpleMap = {
                 hero_eyebrow: '.hero-eyebrow', hero_sub: '.hero-sub', hero_alt: '.hero-alt',
                 scroll_hint: '.scroll-hint span', contact_h2: '.contact-box h2',
-                contact_p: '.contact-box > p', contact_dl: '.contact-link.orange',
-                hero_cv: 'a[href*="cv.pdf"].hero-link.primary', footer: 'footer p',
+                contact_p: '.contact-box > p', contact_dl: 'a.contact-link.orange',
+                hero_cv: 'a.hero-link.primary[download]', footer: 'footer p',
                 nav_profil: '.nav a[href="#profil"]', nav_competences: '.nav a[href="#competences"]',
                 nav_projets: '.nav a[href="#projets"]', nav_experience: '.nav a[href="#experience"]',
                 nav_formation: '.nav a[href="#formation"]', nav_langues: '.nav a[href="#langues"]',
@@ -3065,6 +3065,12 @@
             document.querySelectorAll('.btn-diploma').forEach((el,i) => { if (t['btn_diploma_'+i] !== undefined) el.textContent = t['btn_diploma_'+i]; });
             document.querySelectorAll('.lang-name').forEach((el,i) => { if (t['lang_name_'+i]) el.textContent = t['lang_name_'+i]; });
             document.querySelectorAll('.lang-level').forEach((el,i) => { if (t['lang_level_'+i]) el.textContent = t['lang_level_'+i]; });
+
+            // Swap CV file
+            const cvFile = isFR ? 'CV-Inge-Tamim-Turki-FR.pdf' : 'Resume-Inge-Tamim-Turki-EN.pdf';
+            document.querySelectorAll('a[download].hero-link, a[download].contact-link').forEach(el => {
+                el.href = cvFile;
+            });
         }
 
         function handleTranslate() {
